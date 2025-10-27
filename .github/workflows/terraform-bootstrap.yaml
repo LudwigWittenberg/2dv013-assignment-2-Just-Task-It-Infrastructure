@@ -44,22 +44,21 @@ jobs:
 
       - name: Capture outputs
         run: |
-          mkdir -p /tmp/bootstrap
-          terraform output -raw tfstate_bucket > /tmp/bootstrap/bucket_name.txt
-          terraform output -raw tf_sa_key_json > /tmp/sa_key.json
+          mkdir -p /tmp/credentials
+          terraform output -raw tfstate_bucket > /tmp/credentials/bucket_name.txt
+          terraform output -raw tf_sa_key_json > /tmp/credentials/sa_key.json
         working-directory: Terraform/bootstrap
 
       - name: Upload bucket name artifact
         uses: actions/upload-artifact@v4
         with:
           name: terraform-bucket-name
-          path: /tmp/bootstrap/bucket_name.txt
+          path: /tmp/credentials/bucket_name.txt
           retention-days: 30
 
-      - name: Save service account key to GitHub secret
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          SA_KEY=$(cat /tmp/sa_key.json)
-          gh secret set GOOGLE_CREDENTIALS --body "$SA_KEY" --env terraform
-          echo "✓ Service account key saved to GitHub secret GOOGLE_CREDENTIALS"
+      - name: Upload service account key artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-sa-key
+          path: /tmp/credentials/sa_key.json
+          retention-days: 7
