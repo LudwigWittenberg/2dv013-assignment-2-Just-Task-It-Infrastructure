@@ -49,16 +49,8 @@ jobs:
           terraform output -raw tf_sa_key_json > /tmp/credentials/sa_key.json
         working-directory: Terraform/bootstrap
 
-      - name: Upload bucket name artifact
+      - name: Upload bucket name and service account key to artifact
         uses: actions/upload-artifact@v4
         with:
-          name: terraform-bucket-name
-          path: /tmp/credentials/bucket_name.txt
-          retention-days: 30
-
-      - name: Upload service account key artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-sa-key
-          path: /tmp/credentials/sa_key.json
-          retention-days: 7
+          name: terraform-credentials
+          path: /tmp/credentials/
