@@ -40,5 +40,5 @@ jobs:
 
       - name: Terraform destroy
         run: |
-          terraform destroy -auto-approve -json tfplan
+          terraform destroy -auto-approve
         working-directory: Terraform/Staging
