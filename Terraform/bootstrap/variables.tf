@@ -34,3 +34,12 @@ variable "apis" {
     "storage.googleapis.com"
     ]
 }
+
+#############################
+# Initial Service Account
+#############################
+variable "initial_service_account_email" {
+  description = "Email of the initial service account that runs bootstrap (needs Editor role)"
+  type = string
+  default = ""
+}

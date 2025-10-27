@@ -3,6 +3,14 @@ resource "google_service_account" "tf" {
   display_name = "${lower(var.project_name)} Terraform Service Account"
 }
 
+# Grant Editor role to initial service account if provided
+resource "google_project_iam_member" "initial_sa_editor" {
+  count   = var.initial_service_account_email != "" ? 1 : 0
+  project = var.project_id
+  role    = "roles/editor"
+  member  = "serviceAccount:${var.initial_service_account_email}"
+}
+
 # Roles for infra management (tighten as needed)
 resource "google_project_iam_member" "container_admin" {
   project = var.project_id
