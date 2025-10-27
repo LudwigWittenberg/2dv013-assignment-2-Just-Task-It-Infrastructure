@@ -4,13 +4,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  terraform:
+  terraform-build:
     runs-on: ubuntu-latest
     environment: terraform
-
+    depends-on:
+      - terraform-bootstrap
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Download bucket name artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-bucket-name
+          path: /tmp
+
+      - name: Read bucket name
+        id: bucket
+        run: echo "BUCKET_NAME=$(cat /tmp/bucket_name.txt)" >> $GITHUB_OUTPUT
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -25,7 +36,6 @@ jobs:
           GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
-          GCP_BUCKET_NAME: ${{ vars.GCP_BUCKET_NAME }}
         run: |
           echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
@@ -34,10 +44,10 @@ jobs:
 
       - name: Terraform init
         run: |
-          terraform init -backend-config="bucket=${TF_VAR_bucket_name}"
+          terraform init -backend-config="bucket=${BUCKET_NAME}"
         working-directory: Terraform/Staging
         env:
-          TF_VAR_bucket_name: ${{ vars.GCP_BUCKET_NAME }}
+          BUCKET_NAME: ${{ steps.bucket.outputs.BUCKET_NAME }}
 
       - name: Terraform plan
         run: |

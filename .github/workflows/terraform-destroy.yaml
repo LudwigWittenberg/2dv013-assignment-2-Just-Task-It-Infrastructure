@@ -7,9 +7,22 @@ jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
     environment: terraform
+    depends-on:
+      - terraform-build
+      - terraform-bootstrap
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Download bucket name artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-bucket-name
+          path: /tmp
+
+      - name: Read bucket name
+        id: bucket
+        run: echo "BUCKET_NAME=$(cat /tmp/bucket_name.txt)" >> $GITHUB_OUTPUT
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -24,21 +37,35 @@ jobs:
           GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
-          GCP_BUCKET_NAME: ${{ vars.GCP_BUCKET_NAME }}
         run: |
           echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
-          echo "TF_VAR_bucket_name=${GCP_BUCKET_NAME}" >> $GITHUB_ENV
 
-      - name: Terraform init
+      - name: Download Terraform artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-plan
+          path: Terraform/Staging
+
+      - name: Terraform init Staging
         run: |
-          terraform init -backend-config="bucket=${TF_VAR_bucket_name}"
+          terraform init -backend-config="bucket=${BUCKET_NAME}"
         working-directory: Terraform/Staging
         env:
-          TF_VAR_bucket_name: ${{ vars.GCP_BUCKET_NAME }}
+          BUCKET_NAME: ${{ steps.bucket.outputs.BUCKET_NAME }}
 
-      - name: Terraform destroy
+      - name: Terraform destroy Staging
         run: |
           terraform destroy -auto-approve
         working-directory: Terraform/Staging
+
+      - name: Terraform init Bootstrap
+        run: |
+          terraform init
+        working-directory: Terraform/bootstrap
+
+      - name: Terraform destroy Bootstrap
+        run: |
+          terraform destroy -auto-approve
+        working-directory: Terraform/bootstrap
