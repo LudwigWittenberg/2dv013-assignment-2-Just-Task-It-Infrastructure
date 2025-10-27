@@ -1,5 +1,5 @@
 resource "google_container_cluster" "default" {
-  name = "${var.project_name}-autopilot-cluster"
+  name = "${lower(var.project_name)}-autopilot-cluster"
 
   location                 = var.region
   enable_autopilot         = true
