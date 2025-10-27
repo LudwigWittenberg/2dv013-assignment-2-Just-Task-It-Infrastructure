@@ -1,14 +1,14 @@
 name: Terraform Build
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ['Terraform Bootstrap']
+    types: [completed]
 
 jobs:
   terraform-build:
     runs-on: ubuntu-latest
     environment: terraform
-    depends-on:
-      - terraform-bootstrap
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

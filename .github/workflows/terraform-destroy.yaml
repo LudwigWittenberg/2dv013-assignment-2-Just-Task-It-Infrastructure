@@ -7,9 +7,6 @@ jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
     environment: terraform
-    depends-on:
-      - terraform-build
-      - terraform-bootstrap
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
