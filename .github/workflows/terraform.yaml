@@ -1,9 +1,7 @@
 name: Terraform
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -46,8 +44,6 @@ jobs:
 
   terraform-destroy:
     runs-on: ubuntu-latest
-    on:
-      workflow_dispatch:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
