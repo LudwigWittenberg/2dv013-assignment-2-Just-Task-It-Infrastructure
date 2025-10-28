@@ -28,7 +28,7 @@ variable "project_name" {
 variable "ipv6_access_type" {
   description = "The access type of the ipv6"
   type = string
-  default = "INTERNAL" # Change to "EXTERNAL" if creating an external loadbalancer
+  default = "EXTERNAL" # Change to "INTERNAL" if creating an internal loadbalancer
 }
 
 variable "stack_type" {
