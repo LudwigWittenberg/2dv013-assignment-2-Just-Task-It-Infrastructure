@@ -17,13 +17,14 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.SERVICE_GOOGLE_CREDENTIALS }}
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Set up ENV Variables
         env:
           GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
+          GCP_BUCKET_NAME: ${{ vars.GCP_BUCKET_NAME }}
         run: |
           echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
@@ -60,13 +61,14 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.SERVICE_GOOGLE_CREDENTIALS }}
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Set up ENV Variables
         env:
           GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
+          GCP_BUCKET_NAME: ${{ vars.GCP_BUCKET_NAME }}
         run: |
           echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV

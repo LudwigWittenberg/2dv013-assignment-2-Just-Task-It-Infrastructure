@@ -29,7 +29,7 @@ jobs:
           echo "TF_VAR_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
-          echo "TF_VAR_initial_service_account_email=${{ vars.GITHUB_SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
+          echo "TF_VAR_email=${{ vars.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
 
       - name: Terraform init  
         run: terraform init
@@ -45,16 +45,9 @@ jobs:
 
       - name: Capture outputs
         run: |
-          mkdir -p /tmp/credentials
-          terraform output -raw tfstate_bucket > /tmp/credentials/bucket_name_staging.txt
-          terraform output -raw tf_sa_key_json > /tmp/credentials/sa_key_staging.json
+          echo "The Bucket name: Add the bucket name to the GCP_BUCKET_NAME variable"
+          terraform output
         working-directory: Terraform/bootstrap
-
-      - name: Upload bucket name and service account key to artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-credentials-staging
-          path: /tmp/credentials/
 
   bootstrap-production:
     runs-on: ubuntu-latest
@@ -81,7 +74,7 @@ jobs:
           echo "TF_VAR_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
-          echo "TF_VAR_initial_service_account_email=${{ vars.GITHUB_SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
+          echo "TF_VAR_email=${{ vars.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
 
       - name: Terraform init
         run: terraform init
@@ -97,13 +90,7 @@ jobs:
 
       - name: Capture outputs
         run: |
-          mkdir -p /tmp/credentials
-          terraform output -raw tfstate_bucket > /tmp/credentials/bucket_name_production.txt
-          terraform output -raw tf_sa_key_json > /tmp/credentials/sa_key_production.json
+          echo "The Bucket name: Add the bucket name to the GCP_BUCKET_NAME variable"
+          terraform output
         working-directory: Terraform/bootstrap
 
-      - name: Upload bucket name and service account key to artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-credentials-production
-          path: /tmp/credentials/

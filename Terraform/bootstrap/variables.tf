@@ -38,7 +38,7 @@ variable "apis" {
 #############################
 # Initial Service Account
 #############################
-variable "initial_service_account_email" {
+variable "email" {
   description = "Email of the initial service account that runs bootstrap (needs Editor role)"
   type = string
   default = ""
