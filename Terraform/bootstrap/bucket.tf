@@ -1,4 +1,6 @@
 resource "google_storage_bucket" "tfstate" {
+  depends_on = [google_project_service.apis]
+
   name                        = "bucket-${lower(var.project_name)}"
   location                    = "EU"
   uniform_bucket_level_access = true
