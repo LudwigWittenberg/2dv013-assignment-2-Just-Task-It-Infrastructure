@@ -5,6 +5,9 @@ terraform {
       version = "~> 6.0"
     }
   }
+  backend "gcs" {
+    prefix = "staging/terraform-state"
+  }
 }
 
 provider "google" {
