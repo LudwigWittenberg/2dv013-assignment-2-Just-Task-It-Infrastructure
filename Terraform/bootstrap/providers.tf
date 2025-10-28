@@ -5,10 +5,6 @@ terraform {
       version = "~> 6.0"
     }
   }
-
-    backend "gcs" {
-    prefix = "bootstrap/terraform-state"
-  }
 }
 
 provider "google" {
