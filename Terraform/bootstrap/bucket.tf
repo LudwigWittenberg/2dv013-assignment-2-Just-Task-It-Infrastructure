@@ -8,5 +8,5 @@ resource "google_storage_bucket" "tfstate" {
 resource "google_storage_bucket_iam_member" "tfstate_object_admin" {
   bucket = google_storage_bucket.tfstate.name
   role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${google_service_account.tf.email}"
+  member = "serviceAccount:${var.email}"
 }
