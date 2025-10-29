@@ -40,7 +40,7 @@ jobs:
         working-directory: Terraform/user-and-apis
 
       - name: Upload terraform plan
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-plan-user-apis
           path: Terraform/user-and-apis/tfplan
@@ -92,7 +92,7 @@ jobs:
         working-directory: Terraform/cluster
 
       - name: Upload terraform plan
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-plan-cluster
           path: Terraform/cluster/tfplan
