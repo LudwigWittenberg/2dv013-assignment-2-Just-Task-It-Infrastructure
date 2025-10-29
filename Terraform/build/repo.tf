@@ -1,5 +1,4 @@
 resource "google_cloudbuildv2_repository" "github" {
-  provider          = google-beta
   project           = var.project_id
   location          = var.region
   name              = "${var.project_name}-repo"

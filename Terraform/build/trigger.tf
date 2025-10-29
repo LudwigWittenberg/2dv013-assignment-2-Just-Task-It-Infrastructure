@@ -20,7 +20,6 @@
 
 
 resource "google_cloudbuild_trigger" "repo-trigger" { 
-  provider = google-beta
   location = var.region
   name = "${var.project_name}-trigger"
   repository_event_config {
