@@ -31,15 +31,18 @@ resource "google_project_iam_member" "storage_admin" {
   member  = "serviceAccount:${var.email}"
 }
 
-# Allow Terraform service account to use the default Compute Engine service account
-resource "google_service_account_iam_member" "compute_sa_user" {
+resource "google_project_iam_member" "logging_logWriter" {
   depends_on = [google_project_service.apis]
 
-  service_account_id = "projects/${var.project_id}/serviceAccounts/${data.google_compute_default_service_account.default.email}"
-  role               = "roles/iam.serviceAccountUser"
-  member             = "serviceAccount:${var.email}"
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${var.email}"
 }
 
-data "google_compute_default_service_account" "default" {
+resource "google_project_iam_member" "monitoring_metricWriter" {
+  depends_on = [google_project_service.apis]
+
   project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${var.email}"
 }

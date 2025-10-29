@@ -1,5 +1,7 @@
 resource "google_container_cluster" "default" {
-  name = "${lower(var.project_name)}-autopilot-cluster"
+  for_each = toset(var.cluster_name)
+
+  name = "${lower(var.project_name)}-${each.value}-autopilot-cluster"
 
   location                 = var.region
   enable_autopilot         = true

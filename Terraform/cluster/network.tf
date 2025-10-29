@@ -1,12 +1,16 @@
 resource "google_compute_network" "default" {
-  name = "${lower(var.project_name)}-network"
+  for_each = toset(var.cluster_name)
+
+  name = "${lower(var.project_name)}-${each.value}-network"
 
   auto_create_subnetworks  = false
   enable_ula_internal_ipv6 = true
 }
 
 resource "google_compute_subnetwork" "default" {
-  name = "${lower(var.project_name)}-subnetwork"
+  for_each = toset(var.cluster_name)
+
+  name = "${lower(var.project_name)}-${each.value}-subnetwork"
 
   ip_cidr_range = "10.0.0.0/16"
   region        = var.region

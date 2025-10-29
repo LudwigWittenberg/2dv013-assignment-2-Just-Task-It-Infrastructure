@@ -40,10 +40,23 @@ variable "stack_type" {
 #############################
 # Cluster Variables
 #############################
-# Set `deletion_protection` to `true` will ensure that one cannot
-# accidentally delete this instance by use of Terraform.
 variable "delete_protection" {
   description = "The delete protection of the cluster"
   type = bool
   default = false
+}
+
+variable "cluster_name" {
+  description = "The name of the cluster"
+  type = list(string)
+  default = ["staging", "production"]
+}
+
+#############################
+# Bucket Variables
+#############################
+variable "bucket_state_map_prefix" {
+  description = "The prefix of the bucket"
+  type = string
+  default = "cluster"
 }

@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "gcs" {
-    prefix = "production/terraform-state"
+    prefix = "${var.bucket_state_map_prefix}/terraform-state"
   }
 }
 
