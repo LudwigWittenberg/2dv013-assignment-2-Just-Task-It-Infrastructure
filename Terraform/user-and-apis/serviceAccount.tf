@@ -46,3 +46,11 @@ resource "google_project_iam_member" "monitoring_metricWriter" {
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${var.email}"
 }
+
+resource "google_project_iam_member" "secretmanager_admin" {
+  depends_on = [google_project_service.apis]
+
+  project = var.project_id
+  role    = "roles/secretmanager.admin"
+  member  = "serviceAccount:${var.email}"
+}
