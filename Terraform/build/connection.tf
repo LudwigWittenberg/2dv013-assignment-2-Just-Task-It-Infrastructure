@@ -8,14 +8,14 @@ resource "google_secret_manager_secret" "github-token-secret" {
 
 resource "google_secret_manager_secret_version" "github-token-secret-version" {
   secret = google_secret_manager_secret.github-token-secret.id
-  secret_data = file("my-github-token.txt")
+  secret_data = var.github_token
 }
 
 data "google_iam_policy" "p4sa-secretAccessor" {
   binding {
     role = "roles/secretmanager.secretAccessor"
     // Here, 123456789 is the Google Cloud project number for the project that contains the connection.
-    members = ["serviceAccount:service-123456789@gcp-sa-cloudbuild.iam.gserviceaccount.com"]
+    members = ["serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"]
   }
 }
 
@@ -25,13 +25,15 @@ resource "google_secret_manager_secret_iam_policy" "policy" {
 }
 
 resource "google_cloudbuildv2_connection" "my-connection" {
-  location = "us-central1"
-  name = "my-connection"
+  location = var.region
+  name = "${var.project_name}-connection"
 
   github_config {
-    app_installation_id = 123123
+    app_installation_id = var.github_app_installation_id
     authorizer_credential {
       oauth_token_secret_version = google_secret_manager_secret_version.github-token-secret-version.id
     }
   }
+
+  depends_on = [google_secret_manager_secret_iam_policy.policy]
 }
