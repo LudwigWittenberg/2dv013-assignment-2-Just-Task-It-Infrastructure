@@ -8,6 +8,9 @@ on:
         required: true
         type: string
 
+permissions:
+  actions: read
+
 jobs:
   google-cloud-destroy-user-and-apis:
     runs-on: ubuntu-latest

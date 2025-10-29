@@ -48,12 +48,6 @@ jobs:
         run: terraform apply -auto-approve tfplan
         working-directory: Terraform/user-and-apis
 
-      - name: Capture outputs
-        run: |
-          echo "The Bucket name: Add the bucket name to the GCP_BUCKET_NAME variable"
-          terraform output
-        working-directory: Terraform/user-and-apis
-
   google-cloud-build-setup-cluster:
     runs-on: ubuntu-latest
     environment: google-cloud
@@ -97,10 +91,4 @@ jobs:
 
       - name: Terraform apply
         run: terraform apply -auto-approve tfplan
-        working-directory: Terraform/cluster
-
-      - name: Capture outputs
-        run: |
-          echo "Cluster IP Addresses:"
-          terraform output
         working-directory: Terraform/cluster
