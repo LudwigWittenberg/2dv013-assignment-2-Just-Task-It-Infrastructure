@@ -21,7 +21,7 @@
 
 resource "google_cloudbuild_trigger" "repo-trigger" { 
   location = var.region
-  name = "${var.project_name}-trigger"
+  # name = "${var.project_name}-trigger"
   repository_event_config {
     repository = google_cloudbuildv2_repository.github.id
     push {
@@ -30,5 +30,5 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
   }
   filename = "cloudbuild.yaml"
 
-  depends_on = [google_cloudbuildv2_repository.github]
+  # depends_on = [google_cloudbuildv2_repository.github]
 }
