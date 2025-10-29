@@ -31,17 +31,22 @@ jobs:
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
           echo "TF_VAR_email=${{ secrets.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
           echo "GCP_BUCKET_NAME=${{ vars.GCP_BUCKET_NAME }}" >> $GITHUB_ENV
+          # Enable Terraform debug logs
+          echo "TF_LOG=TRACE" >> $GITHUB_ENV
+          echo "TF_LOG_PROVIDER=TRACE" >> $GITHUB_ENV
+          echo "TF_LOG_PATH=$GITHUB_WORKSPACE/terraform-trace-user-and-apis.log" >> $GITHUB_ENV
+          echo "TF_INPUT=false" >> $GITHUB_ENV
 
       - name: Terraform init
         run: terraform init -backend-config="bucket=${{ vars.GCP_BUCKET_NAME }}"
         working-directory: Terraform/user-and-apis
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -no-color -out=tfplan
         working-directory: Terraform/user-and-apis
 
       - name: Terraform apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -no-color -auto-approve tfplan
         working-directory: Terraform/user-and-apis
 
   # google-cloud-build-setup-cluster:
@@ -121,15 +126,20 @@ jobs:
           echo "TF_VAR_github_token=${GITHUB_TOKEN}" >> $GITHUB_ENV
           echo "TF_VAR_project_number=${GOOGLE_PROJECT_NUMBER}" >> $GITHUB_ENV
           echo "TF_VAR_github_repo=${REPO_LINK}" >> $GITHUB_ENV
-          
+          # Enable Terraform debug logs
+          echo "TF_LOG=TRACE" >> $GITHUB_ENV
+          echo "TF_LOG_PROVIDER=TRACE" >> $GITHUB_ENV
+          echo "TF_LOG_PATH=$GITHUB_WORKSPACE/terraform-trace-build.log" >> $GITHUB_ENV
+          echo "TF_INPUT=false" >> $GITHUB_ENV
+
       - name: Terraform init
         run: terraform init -backend-config="bucket=${{ vars.GCP_BUCKET_NAME }}"
         working-directory: Terraform/build
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -no-color -out=tfplan
         working-directory: Terraform/build
 
       - name: Terraform apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -no-color -auto-approve tfplan
         working-directory: Terraform/build
