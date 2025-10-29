@@ -88,6 +88,7 @@ jobs:
   google-cloud-build-setup-pipeline:
     runs-on: ubuntu-latest
     environment: google-cloud
+    needs: google-cloud-build-setup-user-and-apis
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
