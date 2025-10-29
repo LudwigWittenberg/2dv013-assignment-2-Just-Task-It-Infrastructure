@@ -20,13 +20,18 @@
 
 
 resource "google_cloudbuild_trigger" "repo-trigger" { 
-  location = var.region
+  location = "europe-west1"
   name = "${var.project_name}-trigger"
   repository_event_config {
     repository = google_cloudbuildv2_repository.github.id
     push {
-      branch = "main"
+      branch = "^main$"
     }
   }
   filename = "cloudbuild.yaml"
+
+  depends_on = [
+    google_cloudbuildv2_connection.github_connection,
+    google_cloudbuildv2_repository.github
+  ]
 }
