@@ -36,12 +36,8 @@ jobs:
         run: terraform init -backend-config="bucket=${{ vars.GCP_BUCKET_NAME }}"
         working-directory: Terraform/user-and-apis
 
-      - name: Terraform plan
-        run: terraform plan -out=tfplan
-        working-directory: Terraform/user-and-apis
-
       - name: Terraform destroy
-        run: terraform destroy -auto-approve tfplan
+        run: terraform destroy -auto-approve
         working-directory: Terraform/user-and-apis
 
   google-cloud-destroy-cluster:
@@ -77,12 +73,8 @@ jobs:
           run: terraform init -backend-config="bucket=${{ vars.GCP_BUCKET_NAME }}"
           working-directory: Terraform/cluster
 
-        - name: Terraform plan
-          run: terraform plan -out=tfplan
-          working-directory: Terraform/cluster
-
         - name: Terraform destroy
-          run: terraform destroy -auto-approve tfplan
+          run: terraform destroy -auto-approve
           working-directory: Terraform/cluster
 
 
