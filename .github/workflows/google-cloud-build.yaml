@@ -31,6 +31,9 @@ jobs:
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
           echo "TF_VAR_email=${{ secrets.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
 
+      - name: Debug bucket name
+        run: echo "Bucket name is: ${GCP_BUCKET_NAME}"
+
       - name: Terraform init  
         run: terraform init -backend-config="bucket=${GCP_BUCKET_NAME}"
         working-directory: Terraform/user-and-apis
