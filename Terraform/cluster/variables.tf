@@ -51,3 +51,12 @@ variable "cluster_name" {
   type = list(string)
   default = ["staging", "production"]
 }
+
+#############################
+# Bucket Variables
+#############################
+variable "bucket_state_map_prefix" {
+  description = "The prefix of the bucket"
+  type = string
+  default = "cluster"
+}

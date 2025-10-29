@@ -5,6 +5,9 @@ terraform {
       version = "~> 6.0"
     }
   }
+  backend "gcs" {
+    prefix = "${var.bucket_state_map_prefix}/terraform-state"
+  }
 }
 
 provider "google" {
