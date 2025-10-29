@@ -1,7 +1,7 @@
 #############################
 # Google Project Variables
 #############################
-variable "google_project_id" {
+variable "project_id" {
   description = "The id of the project"
   type = string
   default = ""

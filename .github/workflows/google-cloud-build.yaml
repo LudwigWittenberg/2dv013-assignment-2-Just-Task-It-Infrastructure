@@ -25,7 +25,7 @@ jobs:
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
         run: |
-          echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
+          echo "TF_VAR_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
           echo "TF_VAR_email=${{ secrets.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
@@ -76,7 +76,7 @@ jobs:
           GCP_REGION: ${{ vars.GCP_REGION }}
           GCP_PROJECT_NAME: ${{ vars.GCP_PROJECT_NAME }}
         run: |
-          echo "TF_VAR_google_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
+          echo "TF_VAR_project_id=${GCP_PROJECT_ID}" >> $GITHUB_ENV
           echo "TF_VAR_region=${GCP_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_project_name=${GCP_PROJECT_NAME}" >> $GITHUB_ENV
           echo "TF_VAR_email=${{ secrets.SERVICE_ACCOUNT_EMAIL }}" >> $GITHUB_ENV
