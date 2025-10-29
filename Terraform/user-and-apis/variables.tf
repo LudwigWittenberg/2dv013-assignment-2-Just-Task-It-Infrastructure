@@ -43,12 +43,3 @@ variable "email" {
   type = string
   default = ""
 }
-
-#############################
-# Bucket Variables
-#############################
-variable "bucket_state_map_prefix" {
-  description = "The prefix of the bucket"
-  type = string
-  default = "user-and-apis"
-}
