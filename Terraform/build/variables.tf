@@ -43,3 +43,9 @@ variable "github_token" {
   sensitive = true
   default = ""
 }
+
+variable "github_repo" {
+  description = "The repository of the GitHub app"
+  type = string
+  default = ""
+}
