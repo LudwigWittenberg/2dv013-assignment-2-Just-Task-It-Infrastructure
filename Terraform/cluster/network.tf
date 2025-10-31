@@ -15,8 +15,8 @@ resource "google_compute_subnetwork" "default" {
   ip_cidr_range = "10.0.0.0/16"
   region        = var.region
 
-  stack_type       = var.stack_type
-  ipv6_access_type = var.ipv6_access_type
+  stack_type       = var.subnetwork_stack_type
+  ipv6_access_type = var.subnetwork_stack_type != "IPV4_ONLY" ? var.ipv6_access_type : null
 
   network = google_compute_network.default[each.key].id
   secondary_ip_range {

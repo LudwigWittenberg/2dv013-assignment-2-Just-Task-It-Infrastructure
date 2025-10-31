@@ -31,10 +31,16 @@ variable "ipv6_access_type" {
   default = "EXTERNAL" # Change to "INTERNAL" if creating an internal loadbalancer
 }
 
-variable "stack_type" {
-  description = "The stack type of the ipv4/ipv6"
-  type = string
-  default = "IPV4"
+variable "cluster_stack_type" {
+  description = "Cluster IP stack type: IPV4 or IPV4_IPV6"
+  type        = string
+  default     = "IPV4"
+}
+
+variable "subnetwork_stack_type" {
+  description = "Subnetwork IP stack type: IPV4_ONLY, IPV4_IPV6 or IPV6_ONLY"
+  type        = string
+  default     = "IPV4_ONLY"
 }
 
 #############################

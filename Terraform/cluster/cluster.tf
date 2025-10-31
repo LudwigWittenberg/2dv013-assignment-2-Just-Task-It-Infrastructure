@@ -12,7 +12,7 @@ resource "google_container_cluster" "default" {
   subnetwork = google_compute_subnetwork.default[each.key].id
 
   ip_allocation_policy {
-    stack_type                    = var.stack_type
+    stack_type                    = var.cluster_stack_type
     services_secondary_range_name = google_compute_subnetwork.default[each.key].secondary_ip_range[0].range_name
     cluster_secondary_range_name  = google_compute_subnetwork.default[each.key].secondary_ip_range[1].range_name
   }
