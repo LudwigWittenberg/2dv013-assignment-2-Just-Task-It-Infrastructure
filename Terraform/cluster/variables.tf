@@ -34,7 +34,7 @@ variable "ipv6_access_type" {
 variable "stack_type" {
   description = "The stack type of the ipv4/ipv6"
   type = string
-  default = "IPV4_IPV6"
+  default = "IPV4"
 }
 
 #############################

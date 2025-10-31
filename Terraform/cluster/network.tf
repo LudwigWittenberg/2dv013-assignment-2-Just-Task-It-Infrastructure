@@ -4,7 +4,7 @@ resource "google_compute_network" "default" {
   name = "${lower(var.project_name)}-${each.value}-network"
 
   auto_create_subnetworks  = false
-  enable_ula_internal_ipv6 = true
+  enable_ula_internal_ipv6 = false
 }
 
 resource "google_compute_subnetwork" "default" {
