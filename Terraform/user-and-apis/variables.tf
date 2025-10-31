@@ -31,6 +31,7 @@ variable "apis" {
     "iam.googleapis.com",
     "artifactregistry.googleapis.com",
     "serviceusage.googleapis.com",
+    "secretmanager.googleapis.com",
     "storage.googleapis.com"
     ]
 }

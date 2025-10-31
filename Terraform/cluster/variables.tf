@@ -49,5 +49,5 @@ variable "delete_protection" {
 variable "cluster_name" {
   description = "The name of the cluster"
   type = list(string)
-  default = ["staging", "production"]
+  default = ["production"]
 }

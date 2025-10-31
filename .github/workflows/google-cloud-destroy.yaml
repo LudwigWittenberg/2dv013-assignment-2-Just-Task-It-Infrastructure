@@ -7,6 +7,8 @@ jobs:
   google-cloud-destroy-user-and-apis:
     runs-on: ubuntu-latest
     environment: google-cloud
+    needs: google-cloud-destroy-pipeline
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,7 +45,6 @@ jobs:
   google-cloud-destroy-cluster:
       runs-on: ubuntu-latest
       environment: google-cloud
-      needs: google-cloud-destroy-user-and-apis
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
@@ -77,7 +78,7 @@ jobs:
           run: terraform destroy -auto-approve
           working-directory: Terraform/cluster
 
-  google-cloud-build-setup-pipeline:
+  google-cloud-destroy-pipeline:
     runs-on: ubuntu-latest
     environment: google-cloud
     steps:
